@@ -1,0 +1,24 @@
+{
+  "skillName": "weibo-autopilot",
+  "weiboUser": "",
+  "topics": ["科技", "新闻"],
+  "learningSources": {
+    "posts": true,
+    "comments": true,
+    "reposts": false,
+    "likes": false
+  },
+  "actions": {
+    "repost": true,
+    "comment": false,
+    "like": false
+  },
+  "contentSource": {
+    "type": "home",
+    "groups": []
+  },
+  "settings": {
+    "intervalMinutes": 10,
+    "addSignature": true
+  }
+}
