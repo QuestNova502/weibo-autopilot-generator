@@ -25,13 +25,13 @@
 
 ## 在线使用
 
-访问 [Weibo Autopilot Generator](https://liubin1.github.io/weibo-autopilot-generator/) 在线生成你的个性化 Skill。
+访问 [Weibo Autopilot Generator](https://questnova502.github.io/weibo-autopilot-generator/) 在线生成你的个性化 Skill。
 
 ## 快速开始
 
 ### 方式一：使用在线生成器（推荐）
 
-1. 访问 [在线生成器](https://liubin1.github.io/weibo-autopilot-generator/)
+1. 访问 [在线生成器](https://questnova502.github.io/weibo-autopilot-generator/)
 2. 填写配置信息
 3. 下载生成的 Skill
 4. 解压并移动到 `~/.agents/skills/` 目录
@@ -41,7 +41,7 @@
 
 ```bash
 # 下载通用模板
-git clone https://github.com/liubin1/weibo-autopilot-generator.git
+git clone https://github.com/QuestNova502/weibo-autopilot-generator.git
 cd weibo-autopilot-generator
 
 # 复制模板到 skills 目录
