@@ -1,68 +1,5 @@
 // Weibo Autopilot Generator - Frontend Logic
 
-let currentStep = 1;
-
-// Step Navigation
-function nextStep(step) {
-  if (validateStep(currentStep)) {
-    showStep(step);
-  }
-}
-
-function prevStep(step) {
-  showStep(step);
-}
-
-function showStep(step) {
-  // Hide all steps
-  document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
-
-  // Show target step
-  document.getElementById(`step${step}`).classList.remove('hidden');
-
-  // Update progress indicators
-  document.querySelectorAll('.step').forEach(el => {
-    const stepNum = parseInt(el.dataset.step);
-    const circle = el.querySelector('div');
-    const text = el.querySelector('span');
-
-    if (stepNum <= step) {
-      circle.classList.add('step-active');
-      circle.classList.remove('step-inactive');
-      text.classList.remove('text-gray-500');
-      text.classList.add('text-gray-700', 'font-medium');
-    } else {
-      circle.classList.remove('step-active');
-      circle.classList.add('step-inactive');
-      text.classList.add('text-gray-500');
-      text.classList.remove('text-gray-700', 'font-medium');
-    }
-  });
-
-  currentStep = step;
-
-  // Update summary if on step 4
-  if (step === 4) {
-    updateConfigSummary();
-  }
-}
-
-function validateStep(step) {
-  if (step === 1) {
-    const skillName = document.getElementById('skillName').value.trim();
-    if (!skillName) {
-      alert('请输入 Skill 名称');
-      return false;
-    }
-    // Validate skill name format
-    if (!/^[a-zA-Z0-9_-]+$/.test(skillName)) {
-      alert('Skill 名称只能包含字母、数字、下划线和连字符');
-      return false;
-    }
-  }
-  return true;
-}
-
 // Toggle group input visibility
 document.querySelectorAll('input[name="contentSource"]').forEach(radio => {
   radio.addEventListener('change', (e) => {
@@ -78,7 +15,7 @@ document.querySelectorAll('input[name="contentSource"]').forEach(radio => {
 // Get configuration from form
 function getConfig() {
   return {
-    skillName: document.getElementById('skillName').value.trim() || 'my-weibo-autopilot',
+    skillName: 'weibo-autopilot',
     weiboUser: document.getElementById('weiboUser').value.trim(),
     topics: document.getElementById('topics').value.split(',').map(t => t.trim()).filter(t => t),
 
@@ -103,57 +40,8 @@ function getConfig() {
   };
 }
 
-// Update config summary display
-function updateConfigSummary() {
-  const config = getConfig();
-  const summary = document.getElementById('configSummary');
-
-  const learnSources = [];
-  if (config.learnPosts) learnSources.push('主页发帖');
-  if (config.learnComments) learnSources.push('评论');
-  if (config.learnReposts) learnSources.push('转发');
-  if (config.learnLikes) learnSources.push('点赞');
-
-  const actions = [];
-  if (config.actionRepost) actions.push('转发');
-  if (config.actionComment) actions.push('评论');
-  if (config.actionLike) actions.push('点赞');
-
-  summary.innerHTML = `
-    <div class="flex justify-between py-2 border-b border-gray-200">
-      <span class="text-gray-500">Skill 名称</span>
-      <span class="font-medium text-gray-800">${config.skillName}</span>
-    </div>
-    <div class="flex justify-between py-2 border-b border-gray-200">
-      <span class="text-gray-500">微博用户</span>
-      <span class="font-medium text-gray-800">${config.weiboUser || '(未设置)'}</span>
-    </div>
-    <div class="flex justify-between py-2 border-b border-gray-200">
-      <span class="text-gray-500">兴趣话题</span>
-      <span class="font-medium text-gray-800">${config.topics.length > 0 ? config.topics.join(', ') : '(未设置)'}</span>
-    </div>
-    <div class="flex justify-between py-2 border-b border-gray-200">
-      <span class="text-gray-500">学习来源</span>
-      <span class="font-medium text-gray-800">${learnSources.join(', ') || '无'}</span>
-    </div>
-    <div class="flex justify-between py-2 border-b border-gray-200">
-      <span class="text-gray-500">自动操作</span>
-      <span class="font-medium text-gray-800">${actions.join(', ') || '无'}</span>
-    </div>
-    <div class="flex justify-between py-2 border-b border-gray-200">
-      <span class="text-gray-500">内容来源</span>
-      <span class="font-medium text-gray-800">${config.contentSource === 'home' ? '首页 Feed' : '分组: ' + config.groupNames.join(', ')}</span>
-    </div>
-    <div class="flex justify-between py-2">
-      <span class="text-gray-500">执行间隔</span>
-      <span class="font-medium text-gray-800">${config.interval} 分钟</span>
-    </div>
-  `;
-}
-
 // Generate skill files content
 function generateSkillFiles(config) {
-  // Generate user-config.json
   const userConfig = {
     skillName: config.skillName,
     weiboUser: config.weiboUser,
@@ -180,7 +68,6 @@ function generateSkillFiles(config) {
     createdAt: new Date().toISOString(),
   };
 
-  // Generate user-profile.json template
   const userProfile = {
     lastUpdated: new Date().toISOString(),
     interests: config.topics,
@@ -200,7 +87,6 @@ function generateSkillFiles(config) {
     recentComments: [],
   };
 
-  // Generate skill.md
   const skillMd = `---
 name: ${config.skillName}
 description: Weibo autopilot skill for automatic reposting and engagement
@@ -247,7 +133,6 @@ ${config.actionLike ? '- 自动点赞' : ''}
 - 所有转发内容会带有 AI 标识
 `;
 
-  // Generate README.md
   const readmeMd = `# ${config.skillName}
 
 基于 Claude Code 的微博自动化 Skill。
@@ -288,12 +173,7 @@ ${config.skillName}/
 MIT License
 `;
 
-  return {
-    userConfig,
-    userProfile,
-    skillMd,
-    readmeMd,
-  };
+  return { userConfig, userProfile, skillMd, readmeMd };
 }
 
 // Generate and download customized skill
@@ -301,38 +181,23 @@ async function generateAndDownload() {
   const config = getConfig();
   const files = generateSkillFiles(config);
 
-  // Create ZIP file
   const zip = new JSZip();
   const folder = zip.folder(config.skillName);
 
-  // Add config files
   folder.folder('data').file('user-config.json', JSON.stringify(files.userConfig, null, 2));
   folder.folder('data').file('user-profile.json', JSON.stringify(files.userProfile, null, 2));
-
-  // Add documentation
   folder.file('skill.md', files.skillMd);
   folder.file('README.md', files.readmeMd);
 
-  // Add scripts (fetched from templates)
   const scripts = folder.folder('scripts');
-
-  // Fetch template scripts
-  const scriptFiles = [
-    'weibo-cdp.ts',
-    'browse-feed.ts',
-    'repost.ts',
-    'learn-preferences.ts',
-    'autopilot.ts',
-  ];
+  const scriptFiles = ['weibo-cdp.ts', 'browse-feed.ts', 'repost.ts', 'learn-preferences.ts', 'autopilot.ts'];
 
   for (const scriptName of scriptFiles) {
     try {
       const response = await fetch(`./templates/weibo-autopilot/scripts/${scriptName}`);
       if (response.ok) {
         let content = await response.text();
-        // Customize autopilot.ts with user config
         if (scriptName === 'autopilot.ts') {
-          // Update default interval
           content = content.replace(
             /const intervalMinutes = intervalIndex >= 0 \? parseInt\(args\[intervalIndex \+ 1\]\) : \d+;/,
             `const intervalMinutes = intervalIndex >= 0 ? parseInt(args[intervalIndex + 1]) : ${config.interval};`
@@ -345,7 +210,6 @@ async function generateAndDownload() {
     }
   }
 
-  // Generate and download
   const blob = await zip.generateAsync({ type: 'blob' });
   downloadBlob(blob, `${config.skillName}.zip`);
 }
@@ -355,30 +219,14 @@ async function downloadDefault() {
   const zip = new JSZip();
   const folder = zip.folder('weibo-autopilot');
 
-  // Default config
   const defaultConfig = {
     skillName: 'weibo-autopilot',
     weiboUser: '',
     topics: ['科技', '新闻'],
-    learningSources: {
-      posts: true,
-      comments: true,
-      reposts: false,
-      likes: false,
-    },
-    actions: {
-      repost: true,
-      comment: false,
-      like: false,
-    },
-    contentSource: {
-      type: 'home',
-      groups: [],
-    },
-    settings: {
-      intervalMinutes: 10,
-      addSignature: true,
-    },
+    learningSources: { posts: true, comments: true, reposts: false, likes: false },
+    actions: { repost: true, comment: false, like: false },
+    contentSource: { type: 'home', groups: [] },
+    settings: { intervalMinutes: 10, addSignature: true },
     createdAt: new Date().toISOString(),
   };
 
@@ -386,17 +234,8 @@ async function downloadDefault() {
     lastUpdated: new Date().toISOString(),
     interests: ['科技', '新闻'],
     topics: ['科技', '新闻'],
-    postingStyle: {
-      averageLength: 100,
-      usesEmoji: false,
-      tone: 'neutral',
-      commonPhrases: [],
-    },
-    commentStyle: {
-      averageLength: 30,
-      tone: 'friendly',
-      commonPhrases: [],
-    },
+    postingStyle: { averageLength: 100, usesEmoji: false, tone: 'neutral', commonPhrases: [] },
+    commentStyle: { averageLength: 30, tone: 'friendly', commonPhrases: [] },
     recentPosts: [],
     recentComments: [],
   };
@@ -404,7 +243,6 @@ async function downloadDefault() {
   folder.folder('data').file('user-config.json', JSON.stringify(defaultConfig, null, 2));
   folder.folder('data').file('user-profile.json', JSON.stringify(defaultProfile, null, 2));
 
-  // Add documentation
   folder.file('skill.md', `---
 name: weibo-autopilot
 description: Weibo autopilot skill for automatic reposting
@@ -468,15 +306,8 @@ bun autopilot.ts --dry-run
 MIT License
 `);
 
-  // Add scripts
   const scripts = folder.folder('scripts');
-  const scriptFiles = [
-    'weibo-cdp.ts',
-    'browse-feed.ts',
-    'repost.ts',
-    'learn-preferences.ts',
-    'autopilot.ts',
-  ];
+  const scriptFiles = ['weibo-cdp.ts', 'browse-feed.ts', 'repost.ts', 'learn-preferences.ts', 'autopilot.ts'];
 
   for (const scriptName of scriptFiles) {
     try {
@@ -505,8 +336,3 @@ function downloadBlob(blob, filename) {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  showStep(1);
-});
