@@ -327,7 +327,7 @@ async function generateAndDownload() {
 
   for (const scriptName of scriptFiles) {
     try {
-      const response = await fetch(`../templates/weibo-autopilot/scripts/${scriptName}`);
+      const response = await fetch(`./templates/weibo-autopilot/scripts/${scriptName}`);
       if (response.ok) {
         let content = await response.text();
         // Customize autopilot.ts with user config
@@ -480,7 +480,7 @@ MIT License
 
   for (const scriptName of scriptFiles) {
     try {
-      const response = await fetch(`../templates/weibo-autopilot/scripts/${scriptName}`);
+      const response = await fetch(`./templates/weibo-autopilot/scripts/${scriptName}`);
       if (response.ok) {
         const content = await response.text();
         scripts.file(scriptName, content);
