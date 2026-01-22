@@ -28,14 +28,14 @@ function showStep(step) {
 
     if (stepNum <= step) {
       circle.classList.add('step-active');
-      circle.classList.remove('bg-gray-700');
-      text.classList.remove('text-gray-500');
-      text.classList.add('font-medium');
+      circle.classList.remove('step-inactive');
+      text.classList.remove('text-gray-400');
+      text.classList.add('text-gray-700', 'font-medium');
     } else {
       circle.classList.remove('step-active');
-      circle.classList.add('bg-gray-700');
-      text.classList.add('text-gray-500');
-      text.classList.remove('font-medium');
+      circle.classList.add('step-inactive');
+      text.classList.add('text-gray-400');
+      text.classList.remove('text-gray-700', 'font-medium');
     }
   });
 
@@ -120,33 +120,33 @@ function updateConfigSummary() {
   if (config.actionLike) actions.push('点赞');
 
   summary.innerHTML = `
-    <div class="flex justify-between py-2 border-b border-gray-700">
-      <span class="text-gray-400">Skill 名称</span>
-      <span class="font-medium">${config.skillName}</span>
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <span class="text-gray-500">Skill 名称</span>
+      <span class="font-medium text-gray-800">${config.skillName}</span>
     </div>
-    <div class="flex justify-between py-2 border-b border-gray-700">
-      <span class="text-gray-400">微博用户</span>
-      <span class="font-medium">${config.weiboUser || '(未设置)'}</span>
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <span class="text-gray-500">微博用户</span>
+      <span class="font-medium text-gray-800">${config.weiboUser || '(未设置)'}</span>
     </div>
-    <div class="flex justify-between py-2 border-b border-gray-700">
-      <span class="text-gray-400">兴趣话题</span>
-      <span class="font-medium">${config.topics.length > 0 ? config.topics.join(', ') : '(未设置)'}</span>
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <span class="text-gray-500">兴趣话题</span>
+      <span class="font-medium text-gray-800">${config.topics.length > 0 ? config.topics.join(', ') : '(未设置)'}</span>
     </div>
-    <div class="flex justify-between py-2 border-b border-gray-700">
-      <span class="text-gray-400">学习来源</span>
-      <span class="font-medium">${learnSources.join(', ') || '无'}</span>
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <span class="text-gray-500">学习来源</span>
+      <span class="font-medium text-gray-800">${learnSources.join(', ') || '无'}</span>
     </div>
-    <div class="flex justify-between py-2 border-b border-gray-700">
-      <span class="text-gray-400">自动操作</span>
-      <span class="font-medium">${actions.join(', ') || '无'}</span>
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <span class="text-gray-500">自动操作</span>
+      <span class="font-medium text-gray-800">${actions.join(', ') || '无'}</span>
     </div>
-    <div class="flex justify-between py-2 border-b border-gray-700">
-      <span class="text-gray-400">内容来源</span>
-      <span class="font-medium">${config.contentSource === 'home' ? '首页 Feed' : '分组: ' + config.groupNames.join(', ')}</span>
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <span class="text-gray-500">内容来源</span>
+      <span class="font-medium text-gray-800">${config.contentSource === 'home' ? '首页 Feed' : '分组: ' + config.groupNames.join(', ')}</span>
     </div>
     <div class="flex justify-between py-2">
-      <span class="text-gray-400">执行间隔</span>
-      <span class="font-medium">${config.interval} 分钟</span>
+      <span class="text-gray-500">执行间隔</span>
+      <span class="font-medium text-gray-800">${config.interval} 分钟</span>
     </div>
   `;
 }

@@ -11,38 +11,34 @@
       theme: {
         extend: {
           colors: {
-            primary: '#FF8200',
-            secondary: '#FF6B00',
-            dark: '#1a1a2e',
-            darker: '#16162a',
+            primary: '#E6162D',
+            secondary: '#FF8200',
           }
         }
       }
     }
   </script>
   <style>
-    .gradient-bg {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16162a 100%);
-    }
     .card-hover:hover {
       transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     }
     .input-focus:focus {
-      box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.2);
+      box-shadow: 0 0 0 3px rgba(230, 22, 45, 0.15);
     }
     .step-active {
-      background: linear-gradient(135deg, #FF8200 0%, #FF6B00 100%);
+      background: linear-gradient(135deg, #E6162D 0%, #FF8200 100%);
+      color: white;
     }
-    .checkbox-custom:checked {
-      background-color: #FF8200;
-      border-color: #FF8200;
+    .step-inactive {
+      background: #e5e7eb;
+      color: #6b7280;
     }
   </style>
 </head>
-<body class="gradient-bg min-h-screen text-gray-100">
+<body class="bg-gray-50 min-h-screen text-gray-800">
   <!-- Header -->
-  <header class="border-b border-gray-800">
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
@@ -51,12 +47,12 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-xl font-bold">Weibo Autopilot</h1>
+          <h1 class="text-xl font-bold text-gray-900">Weibo Autopilot</h1>
           <p class="text-xs text-gray-500">Skill Generator for Claude Code</p>
         </div>
       </div>
-      <a href="https://github.com/liubin1/weibo-autopilot-generator" target="_blank"
-         class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+      <a href="https://github.com/QuestNova502/weibo-autopilot-generator" target="_blank"
+         class="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
@@ -67,26 +63,35 @@
 
   <!-- Main Content -->
   <main class="max-w-6xl mx-auto px-6 py-8">
+
+    <!-- Hero Section -->
+    <section class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">微博自动化 Skill 生成器</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        为 Claude Code 打造的微博自动化工具。根据你的偏好生成个性化 Skill，自动浏览、筛选并转发感兴趣的内容。
+      </p>
+    </section>
+
     <!-- Progress Steps -->
-    <div class="flex items-center justify-center mb-12">
-      <div class="flex items-center gap-4">
+    <div class="flex items-center justify-center mb-10">
+      <div class="flex items-center gap-3 flex-wrap justify-center">
         <div class="step flex items-center gap-2" data-step="1">
           <div class="w-8 h-8 rounded-full step-active flex items-center justify-center text-sm font-bold">1</div>
-          <span class="text-sm font-medium">基础配置</span>
+          <span class="text-sm font-medium text-gray-700">基础配置</span>
         </div>
-        <div class="w-12 h-px bg-gray-700"></div>
+        <div class="w-8 h-px bg-gray-300 hidden sm:block"></div>
         <div class="step flex items-center gap-2" data-step="2">
-          <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold">2</div>
+          <div class="w-8 h-8 rounded-full step-inactive flex items-center justify-center text-sm font-bold">2</div>
           <span class="text-sm text-gray-500">学习设置</span>
         </div>
-        <div class="w-12 h-px bg-gray-700"></div>
+        <div class="w-8 h-px bg-gray-300 hidden sm:block"></div>
         <div class="step flex items-center gap-2" data-step="3">
-          <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold">3</div>
+          <div class="w-8 h-8 rounded-full step-inactive flex items-center justify-center text-sm font-bold">3</div>
           <span class="text-sm text-gray-500">自动化行为</span>
         </div>
-        <div class="w-12 h-px bg-gray-700"></div>
+        <div class="w-8 h-px bg-gray-300 hidden sm:block"></div>
         <div class="step flex items-center gap-2" data-step="4">
-          <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold">4</div>
+          <div class="w-8 h-8 rounded-full step-inactive flex items-center justify-center text-sm font-bold">4</div>
           <span class="text-sm text-gray-500">生成下载</span>
         </div>
       </div>
@@ -94,35 +99,35 @@
 
     <!-- Step 1: Basic Config -->
     <section id="step1" class="step-content">
-      <div class="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 card-hover transition-all duration-300">
-        <h2 class="text-2xl font-bold mb-2">基础配置</h2>
-        <p class="text-gray-400 mb-8">设置你的微博账号信息和 Skill 名称</p>
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm card-hover transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-2 text-gray-900">基础配置</h2>
+        <p class="text-gray-500 mb-8">设置你的微博账号信息和 Skill 名称</p>
 
         <div class="grid md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-medium mb-2">Skill 名称</label>
+            <label class="block text-sm font-medium mb-2 text-gray-700">Skill 名称</label>
             <input type="text" id="skillName" placeholder="例如: my-weibo-autopilot"
-                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl input-focus focus:border-primary outline-none transition-all">
-            <p class="text-xs text-gray-500 mt-2">将用于生成的文件夹名称</p>
+                   class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl input-focus focus:border-primary outline-none transition-all text-gray-800">
+            <p class="text-xs text-gray-400 mt-2">将用于生成的文件夹名称</p>
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-2">微博昵称或 UID</label>
+            <label class="block text-sm font-medium mb-2 text-gray-700">微博昵称或 UID</label>
             <input type="text" id="weiboUser" placeholder="输入你的微博昵称或数字 UID"
-                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl input-focus focus:border-primary outline-none transition-all">
-            <p class="text-xs text-gray-500 mt-2">用于学习你的发帖风格</p>
+                   class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl input-focus focus:border-primary outline-none transition-all text-gray-800">
+            <p class="text-xs text-gray-400 mt-2">用于学习你的发帖风格</p>
           </div>
         </div>
 
         <div class="mt-6">
-          <label class="block text-sm font-medium mb-2">兴趣话题 <span class="text-gray-500">(用逗号分隔)</span></label>
+          <label class="block text-sm font-medium mb-2 text-gray-700">兴趣话题 <span class="text-gray-400">(用逗号分隔)</span></label>
           <input type="text" id="topics" placeholder="例如: 科技, 足球, 国际新闻, AI"
-                 class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl input-focus focus:border-primary outline-none transition-all">
-          <p class="text-xs text-gray-500 mt-2">系统会优先转发与这些话题相关的内容</p>
+                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl input-focus focus:border-primary outline-none transition-all text-gray-800">
+          <p class="text-xs text-gray-400 mt-2">系统会优先转发与这些话题相关的内容</p>
         </div>
 
         <div class="mt-8 flex justify-end">
-          <button onclick="nextStep(2)" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition-opacity">
+          <button onclick="nextStep(2)" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium hover:opacity-90 transition-opacity">
             下一步 →
           </button>
         </div>
@@ -131,49 +136,49 @@
 
     <!-- Step 2: Learning Sources -->
     <section id="step2" class="step-content hidden">
-      <div class="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 card-hover transition-all duration-300">
-        <h2 class="text-2xl font-bold mb-2">学习设置</h2>
-        <p class="text-gray-400 mb-8">选择用于学习你风格的数据来源</p>
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm card-hover transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-2 text-gray-900">学习设置</h2>
+        <p class="text-gray-500 mb-8">选择用于学习你风格的数据来源</p>
 
         <div class="space-y-4">
-          <label class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-            <input type="checkbox" id="learnPosts" checked class="mt-1 w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+          <label class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+            <input type="checkbox" id="learnPosts" checked class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
             <div>
-              <div class="font-medium">主页发帖</div>
-              <div class="text-sm text-gray-400">学习你发布的原创微博内容和风格</div>
+              <div class="font-medium text-gray-800">主页发帖</div>
+              <div class="text-sm text-gray-500">学习你发布的原创微博内容和风格</div>
             </div>
           </label>
 
-          <label class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-            <input type="checkbox" id="learnComments" checked class="mt-1 w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+          <label class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+            <input type="checkbox" id="learnComments" checked class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
             <div>
-              <div class="font-medium">发出的评论</div>
-              <div class="text-sm text-gray-400">学习你对他人内容的评论风格</div>
+              <div class="font-medium text-gray-800">发出的评论</div>
+              <div class="text-sm text-gray-500">学习你对他人内容的评论风格</div>
             </div>
           </label>
 
-          <label class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-            <input type="checkbox" id="learnReposts" class="mt-1 w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+          <label class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+            <input type="checkbox" id="learnReposts" class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
             <div>
-              <div class="font-medium">转发内容</div>
-              <div class="text-sm text-gray-400">学习你转发时添加的评论</div>
+              <div class="font-medium text-gray-800">转发内容</div>
+              <div class="text-sm text-gray-500">学习你转发时添加的评论</div>
             </div>
           </label>
 
-          <label class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-            <input type="checkbox" id="learnLikes" class="mt-1 w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+          <label class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+            <input type="checkbox" id="learnLikes" class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
             <div>
-              <div class="font-medium">点赞内容</div>
-              <div class="text-sm text-gray-400">分析你点赞的内容偏好</div>
+              <div class="font-medium text-gray-800">点赞内容</div>
+              <div class="text-sm text-gray-500">分析你点赞的内容偏好</div>
             </div>
           </label>
         </div>
 
         <div class="mt-8 flex justify-between">
-          <button onclick="prevStep(1)" class="px-6 py-3 border border-gray-700 rounded-xl font-medium hover:bg-gray-800 transition-colors">
+          <button onclick="prevStep(1)" class="px-6 py-3 border border-gray-300 rounded-xl font-medium hover:bg-gray-50 transition-colors text-gray-700">
             ← 上一步
           </button>
-          <button onclick="nextStep(3)" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition-opacity">
+          <button onclick="nextStep(3)" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium hover:opacity-90 transition-opacity">
             下一步 →
           </button>
         </div>
@@ -182,35 +187,35 @@
 
     <!-- Step 3: Automation Behavior -->
     <section id="step3" class="step-content hidden">
-      <div class="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 card-hover transition-all duration-300">
-        <h2 class="text-2xl font-bold mb-2">自动化行为</h2>
-        <p class="text-gray-400 mb-8">配置自动执行的操作和内容来源</p>
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm card-hover transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-2 text-gray-900">自动化行为</h2>
+        <p class="text-gray-500 mb-8">配置自动执行的操作和内容来源</p>
 
         <!-- Actions -->
         <div class="mb-8">
-          <h3 class="text-lg font-medium mb-4">自动执行的操作</h3>
+          <h3 class="text-lg font-medium mb-4 text-gray-800">自动执行的操作</h3>
           <div class="grid md:grid-cols-3 gap-4">
-            <label class="flex items-center gap-3 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-              <input type="checkbox" id="actionRepost" checked class="w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+            <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+              <input type="checkbox" id="actionRepost" checked class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
               <div>
-                <div class="font-medium">转发</div>
-                <div class="text-xs text-gray-400">自动转发内容</div>
+                <div class="font-medium text-gray-800">转发</div>
+                <div class="text-xs text-gray-500">自动转发内容</div>
               </div>
             </label>
 
-            <label class="flex items-center gap-3 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-              <input type="checkbox" id="actionComment" class="w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+            <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+              <input type="checkbox" id="actionComment" class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
               <div>
-                <div class="font-medium">评论</div>
-                <div class="text-xs text-gray-400">自动发评论</div>
+                <div class="font-medium text-gray-800">评论</div>
+                <div class="text-xs text-gray-500">自动发评论</div>
               </div>
             </label>
 
-            <label class="flex items-center gap-3 p-4 bg-gray-800/50 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
-              <input type="checkbox" id="actionLike" class="w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+            <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+              <input type="checkbox" id="actionLike" class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
               <div>
-                <div class="font-medium">点赞</div>
-                <div class="text-xs text-gray-400">自动点赞</div>
+                <div class="font-medium text-gray-800">点赞</div>
+                <div class="text-xs text-gray-500">自动点赞</div>
               </div>
             </label>
           </div>
@@ -218,53 +223,53 @@
 
         <!-- Content Source -->
         <div class="mb-8">
-          <h3 class="text-lg font-medium mb-4">内容来源</h3>
+          <h3 class="text-lg font-medium mb-4 text-gray-800">内容来源</h3>
           <div class="space-y-3">
             <label class="flex items-center gap-3">
               <input type="radio" name="contentSource" value="home" checked class="w-4 h-4 text-primary focus:ring-primary">
-              <span>首页 Feed</span>
+              <span class="text-gray-800">首页 Feed</span>
               <span class="text-sm text-gray-500">- 你关注的所有人</span>
             </label>
 
             <label class="flex items-center gap-3">
               <input type="radio" name="contentSource" value="group" class="w-4 h-4 text-primary focus:ring-primary">
-              <span>特定分组</span>
+              <span class="text-gray-800">特定分组</span>
             </label>
 
             <div id="groupInput" class="ml-7 mt-2 hidden">
               <input type="text" id="groupNames" placeholder="输入分组名称，用逗号分隔 (例如: 科技博主, 足球)"
-                     class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg input-focus focus:border-primary outline-none text-sm">
+                     class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg input-focus focus:border-primary outline-none text-sm text-gray-800">
             </div>
           </div>
         </div>
 
         <!-- Interval -->
         <div class="mb-8">
-          <h3 class="text-lg font-medium mb-4">执行间隔</h3>
+          <h3 class="text-lg font-medium mb-4 text-gray-800">执行间隔</h3>
           <div class="flex items-center gap-4">
             <input type="number" id="interval" value="10" min="5" max="60"
-                   class="w-24 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg input-focus focus:border-primary outline-none text-center">
-            <span class="text-gray-400">分钟执行一次</span>
+                   class="w-24 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg input-focus focus:border-primary outline-none text-center text-gray-800">
+            <span class="text-gray-600">分钟执行一次</span>
           </div>
-          <p class="text-xs text-gray-500 mt-2">建议设置 10-30 分钟，避免过于频繁</p>
+          <p class="text-xs text-gray-400 mt-2">建议设置 10-30 分钟，避免过于频繁</p>
         </div>
 
         <!-- AI Signature -->
         <div class="mb-8">
           <label class="flex items-center gap-3">
-            <input type="checkbox" id="addSignature" checked class="w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary">
+            <input type="checkbox" id="addSignature" checked class="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary">
             <div>
-              <span class="font-medium">添加 AI 签名</span>
-              <span class="text-sm text-gray-400 ml-2">在转发内容末尾添加 AI 标识</span>
+              <span class="font-medium text-gray-800">添加 AI 签名</span>
+              <span class="text-sm text-gray-500 ml-2">在转发内容末尾添加 AI 标识</span>
             </div>
           </label>
         </div>
 
         <div class="mt-8 flex justify-between">
-          <button onclick="prevStep(2)" class="px-6 py-3 border border-gray-700 rounded-xl font-medium hover:bg-gray-800 transition-colors">
+          <button onclick="prevStep(2)" class="px-6 py-3 border border-gray-300 rounded-xl font-medium hover:bg-gray-50 transition-colors text-gray-700">
             ← 上一步
           </button>
-          <button onclick="nextStep(4)" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition-opacity">
+          <button onclick="nextStep(4)" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium hover:opacity-90 transition-opacity">
             下一步 →
           </button>
         </div>
@@ -273,13 +278,13 @@
 
     <!-- Step 4: Generate & Download -->
     <section id="step4" class="step-content hidden">
-      <div class="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 card-hover transition-all duration-300">
-        <h2 class="text-2xl font-bold mb-2">生成并下载</h2>
-        <p class="text-gray-400 mb-8">确认配置并生成你的个性化 Skill</p>
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm card-hover transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-2 text-gray-900">生成并下载</h2>
+        <p class="text-gray-500 mb-8">确认配置并生成你的个性化 Skill</p>
 
         <!-- Config Summary -->
-        <div class="bg-gray-800/50 rounded-xl p-6 mb-8">
-          <h3 class="text-lg font-medium mb-4">配置摘要</h3>
+        <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
+          <h3 class="text-lg font-medium mb-4 text-gray-800">配置摘要</h3>
           <div id="configSummary" class="space-y-2 text-sm">
             <!-- Will be filled by JS -->
           </div>
@@ -288,7 +293,7 @@
         <!-- Download Buttons -->
         <div class="grid md:grid-cols-2 gap-4 mb-8">
           <button onclick="generateAndDownload()"
-                  class="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition-opacity">
+                  class="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium hover:opacity-90 transition-opacity">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
@@ -296,7 +301,7 @@
           </button>
 
           <button onclick="downloadDefault()"
-                  class="flex items-center justify-center gap-3 px-6 py-4 border border-gray-600 rounded-xl font-medium hover:bg-gray-800 transition-colors">
+                  class="flex items-center justify-center gap-3 px-6 py-4 border border-gray-300 rounded-xl font-medium hover:bg-gray-50 transition-colors text-gray-700">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
             </svg>
@@ -305,74 +310,175 @@
         </div>
 
         <!-- Installation Guide Preview -->
-        <div class="bg-gray-800/30 rounded-xl p-6 border border-gray-700">
-          <h3 class="text-lg font-medium mb-4">快速安装指南</h3>
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-100">
+          <h3 class="text-lg font-medium mb-4 text-gray-800">快速安装指南</h3>
           <div class="space-y-4 text-sm">
             <div class="flex gap-3">
-              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">1</span>
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">1</span>
               <div>
-                <div class="font-medium">解压下载的文件</div>
-                <code class="text-xs text-gray-400 bg-gray-900 px-2 py-1 rounded mt-1 inline-block">unzip weibo-autopilot-skill.zip</code>
+                <div class="font-medium text-gray-800">解压下载的文件</div>
+                <code class="text-xs text-gray-600 bg-gray-200 px-2 py-1 rounded mt-1 inline-block">unzip weibo-autopilot-skill.zip</code>
               </div>
             </div>
 
             <div class="flex gap-3">
-              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">2</span>
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">2</span>
               <div>
-                <div class="font-medium">移动到 Claude Code Skills 目录</div>
-                <code class="text-xs text-gray-400 bg-gray-900 px-2 py-1 rounded mt-1 inline-block">mv skill-name ~/.agents/skills/</code>
+                <div class="font-medium text-gray-800">移动到 Claude Code Skills 目录</div>
+                <code class="text-xs text-gray-600 bg-gray-200 px-2 py-1 rounded mt-1 inline-block">mv skill-name ~/.agents/skills/</code>
               </div>
             </div>
 
             <div class="flex gap-3">
-              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">3</span>
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">3</span>
               <div>
-                <div class="font-medium">首次运行学习用户偏好</div>
-                <code class="text-xs text-gray-400 bg-gray-900 px-2 py-1 rounded mt-1 inline-block">cd scripts && bun learn-preferences.ts</code>
+                <div class="font-medium text-gray-800">首次运行学习用户偏好</div>
+                <code class="text-xs text-gray-600 bg-gray-200 px-2 py-1 rounded mt-1 inline-block">cd scripts && bun learn-preferences.ts</code>
               </div>
             </div>
 
             <div class="flex gap-3">
-              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">4</span>
+              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">4</span>
               <div>
-                <div class="font-medium">启动自动运行</div>
-                <code class="text-xs text-gray-400 bg-gray-900 px-2 py-1 rounded mt-1 inline-block">bun autopilot.ts</code>
+                <div class="font-medium text-gray-800">启动自动运行</div>
+                <code class="text-xs text-gray-600 bg-gray-200 px-2 py-1 rounded mt-1 inline-block">bun autopilot.ts</code>
               </div>
             </div>
           </div>
         </div>
 
         <div class="mt-8 flex justify-between">
-          <button onclick="prevStep(3)" class="px-6 py-3 border border-gray-700 rounded-xl font-medium hover:bg-gray-800 transition-colors">
+          <button onclick="prevStep(3)" class="px-6 py-3 border border-gray-300 rounded-xl font-medium hover:bg-gray-50 transition-colors text-gray-700">
             ← 上一步
           </button>
         </div>
       </div>
     </section>
 
+    <!-- Documentation Section -->
+    <section class="mt-12 bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+      <h2 class="text-2xl font-bold mb-6 text-gray-900">使用说明</h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- What it does -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+              <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </span>
+            功能特性
+          </h3>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span><strong>智能学习</strong> - 分析你的发帖和评论风格，生成个性化用户画像</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span><strong>自动浏览</strong> - 定时浏览首页或指定分组的内容</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span><strong>话题匹配</strong> - 根据你设置的兴趣话题筛选内容</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span><strong>自动转发</strong> - 选择最匹配的内容自动转发并添加评论</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span><strong>AI 标识</strong> - 所有自动发布的内容带有明确的 AI 标识</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Requirements -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
+              <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+            </span>
+            系统要求
+          </h3>
+          <ul class="space-y-2 text-gray-600">
+            <li class="flex items-start gap-2">
+              <span class="text-secondary mt-1">•</span>
+              <span><strong>Claude Code</strong> - Anthropic 官方 CLI 工具</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-secondary mt-1">•</span>
+              <span><strong>Bun</strong> - JavaScript 运行时 (或 Node.js 18+)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-secondary mt-1">•</span>
+              <span><strong>Chrome</strong> - 用于浏览器自动化</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-secondary mt-1">•</span>
+              <span><strong>微博账号</strong> - 首次运行需登录</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Commands -->
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800">常用命令</h3>
+        <div class="bg-gray-900 rounded-xl p-4 text-sm font-mono overflow-x-auto">
+          <div class="text-gray-400"># 学习用户偏好（首次必须运行）</div>
+          <div class="text-green-400">bun learn-preferences.ts</div>
+          <div class="mt-3 text-gray-400"># 启动自动化</div>
+          <div class="text-green-400">bun autopilot.ts</div>
+          <div class="mt-3 text-gray-400"># 指定分组和间隔</div>
+          <div class="text-green-400">bun autopilot.ts --group "科技" --interval 15</div>
+          <div class="mt-3 text-gray-400"># 试运行（不实际转发）</div>
+          <div class="text-green-400">bun autopilot.ts --dry-run</div>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+        <h4 class="font-semibold text-amber-800 mb-2">注意事项</h4>
+        <ul class="text-sm text-amber-700 space-y-1">
+          <li>• 首次运行会打开浏览器，需要手动登录微博账号</li>
+          <li>• 建议设置合理的间隔时间（10-30分钟），避免频繁操作</li>
+          <li>• 请遵守微博平台规则，合理使用自动化工具</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- Quick Start Section -->
-    <section class="mt-12 bg-gray-900/30 rounded-2xl p-8 border border-gray-800">
-      <h2 class="text-xl font-bold mb-4">不想配置？使用通用模板快速开始</h2>
-      <p class="text-gray-400 mb-6">
+    <section class="mt-8 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-2xl p-8 border border-primary/10">
+      <h2 class="text-xl font-bold mb-4 text-gray-900">不想配置？使用通用模板快速开始</h2>
+      <p class="text-gray-600 mb-6">
         通用模板包含所有核心功能，下载后只需简单配置即可使用。适合想要快速体验的用户。
       </p>
-      <div class="flex flex-wrap gap-4">
-        <button onclick="downloadDefault()" class="px-5 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors text-sm">
-          下载通用模板
-        </button>
-        <a href="https://github.com/liubin1/weibo-autopilot-generator#readme" target="_blank"
-           class="px-5 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition-colors text-sm">
-          查看完整文档
-        </a>
-      </div>
+      <button onclick="downloadDefault()" class="px-5 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm text-gray-700 shadow-sm">
+        下载通用模板
+      </button>
     </section>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-gray-800 mt-16">
-    <div class="max-w-6xl mx-auto px-6 py-8 text-center text-gray-500 text-sm">
-      <p>Weibo Autopilot Generator - 为 Claude Code 打造的微博自动化工具</p>
-      <p class="mt-2">开源项目 · MIT License · Made with Claude</p>
+  <footer class="border-t border-gray-200 mt-16 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <!-- Credits -->
+      <div class="text-center mb-6 p-4 bg-gray-50 rounded-xl">
+        <p class="text-gray-600">
+          本项目基于 <a href="https://weibo.com/booyu" target="_blank" class="text-primary hover:underline font-medium">@宝玉</a> 的
+          <a href="https://github.com/anthropics/claude-code/tree/main/.claude/skills/baoyu-post-to-x" target="_blank" class="text-primary hover:underline">X 自动发博 Skill</a>
+          改造而来，感谢宝玉老师的开源分享！
+        </p>
+      </div>
+
+      <div class="text-center text-gray-500 text-sm">
+        <p>Weibo Autopilot Generator - 为 Claude Code 打造的微博自动化工具</p>
+        <p class="mt-2">开源项目 · MIT License · Made with Claude</p>
+      </div>
     </div>
   </footer>
 
