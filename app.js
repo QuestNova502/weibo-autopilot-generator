@@ -29,12 +29,12 @@ function showStep(step) {
     if (stepNum <= step) {
       circle.classList.add('step-active');
       circle.classList.remove('step-inactive');
-      text.classList.remove('text-gray-400');
+      text.classList.remove('text-gray-500');
       text.classList.add('text-gray-700', 'font-medium');
     } else {
       circle.classList.remove('step-active');
       circle.classList.add('step-inactive');
-      text.classList.add('text-gray-400');
+      text.classList.add('text-gray-500');
       text.classList.remove('text-gray-700', 'font-medium');
     }
   });
