@@ -1,8 +1,4 @@
-# Weibo Autopilot Generator
-
-<p align="center">
-  <img src="docs/images/logo.png" alt="Weibo Autopilot" width="120">
-</p>
+<h1 align="center">🤖 Weibo Autopilot Generator</h1>
 
 <p align="center">
   <strong>为 Claude Code 打造的微博自动化 Skill 生成器</strong>
