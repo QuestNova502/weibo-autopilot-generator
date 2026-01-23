@@ -45,7 +45,7 @@ git clone https://github.com/QuestNova502/weibo-autopilot-generator.git
 cd weibo-autopilot-generator
 
 # 复制通用版 skill 到 skills 目录
-cp -r skill ~/.agents/skills/weibo-autopilot
+cp -r weibo-autopilot ~/.agents/skills/
 
 # 进入 skill 目录
 cd ~/.agents/skills/weibo-autopilot/scripts
