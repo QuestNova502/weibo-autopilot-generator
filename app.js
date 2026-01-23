@@ -18,6 +18,7 @@ function getConfig() {
     skillName: 'weibo-autopilot',
     weiboUser: document.getElementById('weiboUser').value.trim(),
     topics: document.getElementById('topics').value.split(',').map(t => t.trim()).filter(t => t),
+    customPrompt: document.getElementById('customPrompt').value.trim(),
 
     // Learning sources
     learnPosts: document.getElementById('learnPosts').checked,
@@ -40,12 +41,23 @@ function getConfig() {
   };
 }
 
+// Check if input looks like a UID (numeric) or nickname
+function isNumericUid(value) {
+  return /^\d+$/.test(value);
+}
+
 // Generate skill files content
 function generateSkillFiles(config) {
+  // Store both weiboUser (original input) and determine if it's a UID
+  const isUid = isNumericUid(config.weiboUser);
+
   const userConfig = {
     skillName: config.skillName,
     weiboUser: config.weiboUser,
+    // If numeric, also set weiboUid for backward compatibility
+    ...(isUid ? { weiboUid: config.weiboUser } : {}),
     topics: config.topics,
+    customPrompt: config.customPrompt,
     learningSources: {
       posts: config.learnPosts,
       comments: config.learnComments,
@@ -105,23 +117,29 @@ ${config.actionLike ? '- 自动点赞' : ''}
 
 ## 配置
 
+- 微博用户: ${config.weiboUser || '(请在 user-config.json 中配置)'}
 - 内容来源: ${config.contentSource === 'home' ? '首页 Feed' : '分组 (' + config.groupNames.join(', ') + ')'}
 - 执行间隔: ${config.interval} 分钟
-- 兴趣话题: ${config.topics.join(', ')}
+- 兴趣话题: ${config.topics.join(', ') || '(未设置)'}
+${config.customPrompt ? '- 自定义提示词: 已配置' : ''}
 
 ## 使用方法
 
-1. 首次运行学习偏好:
+1. **重要**: 确保 \`data/user-config.json\` 中的 \`weiboUser\` 已填写你的微博昵称或 UID
+   - 昵称: 你的微博名字
+   - UID: 纯数字，可从微博主页 URL (weibo.com/u/xxx) 获取
+
+2. 首次运行学习偏好:
    \`\`\`bash
    cd scripts && bun learn-preferences.ts
    \`\`\`
 
-2. 启动自动运行:
+3. 启动自动运行:
    \`\`\`bash
    bun autopilot.ts
    \`\`\`
 
-3. 带参数运行:
+4. 带参数运行:
    \`\`\`bash
    bun autopilot.ts --interval 15 --group "科技"
    \`\`\`
@@ -131,6 +149,7 @@ ${config.actionLike ? '- 自动点赞' : ''}
 - 首次运行需要在浏览器中登录微博
 - 建议设置合理的间隔时间，避免频繁操作
 - 所有转发内容会带有 AI 标识
+- 本工具仅供学习研究，请勿用于批量操作
 `;
 
   const readmeMd = `# ${config.skillName}
@@ -179,6 +198,14 @@ MIT License
 // Generate and download customized skill
 async function generateAndDownload() {
   const config = getConfig();
+
+  // Validate input - allow both nickname and UID
+  if (!config.weiboUser) {
+    alert('请填写你的微博昵称或 UID！\n\n昵称就是你的微博名字\nUID 是纯数字，可以从微博主页 URL 获取');
+    document.getElementById('weiboUser').focus();
+    return;
+  }
+
   const files = generateSkillFiles(config);
 
   const zip = new JSZip();
@@ -223,6 +250,7 @@ async function downloadDefault() {
     skillName: 'weibo-autopilot',
     weiboUser: '',
     topics: ['科技', '新闻'],
+    customPrompt: '',
     learningSources: { posts: true, comments: true, reposts: false, likes: false },
     actions: { repost: true, comment: false, like: false },
     contentSource: { type: 'home', groups: [] },

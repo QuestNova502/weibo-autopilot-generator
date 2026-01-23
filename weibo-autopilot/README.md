@@ -1,36 +1,68 @@
-# Weibo Autopilot - 通用版
+# Weibo Autopilot
 
-这是可以直接下载使用的微博自动化 Skill 通用版本。
+基于 Claude Code 的微博自动化 Skill。
 
-## 安装步骤
-
-1. 下载整个 `skill` 文件夹
-2. 重命名为你喜欢的名字（如 `my-weibo-autopilot`）
-3. 移动到 `~/.agents/skills/` 目录
+## 快速开始
 
 ```bash
-mv skill ~/.agents/skills/my-weibo-autopilot
-```
+# 1. 移动到 skills 目录
+mv weibo-autopilot ~/.agents/skills/
 
-## 首次使用
+# 2. 进入脚本目录
+cd ~/.agents/skills/weibo-autopilot/scripts
 
-1. 学习你的发帖风格（首次必须运行）：
-```bash
-cd ~/.agents/skills/my-weibo-autopilot/scripts
+# 3. 学习用户偏好（首次必须）
 bun learn-preferences.ts
-```
 
-2. 启动自动运行：
-```bash
+# 4. 启动自动化
 bun autopilot.ts
 ```
 
-## 自定义配置
+## 配置
 
-运行学习脚本后，你可以编辑 `data/user-profile.json` 来调整：
-- 感兴趣的话题
-- 发帖风格偏好
+编辑 `data/user-config.json`：
 
-## 更多信息
+```json
+{
+  "topics": ["科技", "足球", "AI"],
+  "settings": {
+    "intervalMinutes": 10
+  },
+  "contentSource": {
+    "type": "home",
+    "groups": []
+  }
+}
+```
 
-查看 [SKILL.md](./SKILL.md) 了解完整的命令参考和配置说明。
+## 命令
+
+```bash
+# 学习偏好
+bun learn-preferences.ts
+
+# 启动自动化
+bun autopilot.ts
+
+# 指定分组
+bun autopilot.ts --group "科技"
+
+# 试运行
+bun autopilot.ts --dry-run
+```
+
+## 文件结构
+
+```
+weibo-autopilot/
+├── scripts/           # 脚本文件
+├── data/              # 数据文件
+│   ├── user-config.json
+│   └── user-profile.json
+├── skill.md
+└── README.md
+```
+
+## 许可
+
+MIT License

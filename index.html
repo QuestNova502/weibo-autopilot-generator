@@ -52,6 +52,24 @@
   <!-- Main Content -->
   <main class="max-w-4xl mx-auto px-6 py-8">
 
+    <!-- Disclaimer Banner -->
+    <div class="mb-6 p-4 bg-amber-50 border border-amber-300 rounded-xl">
+      <div class="flex items-start gap-3">
+        <svg class="w-6 h-6 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+        <div>
+          <h4 class="font-semibold text-amber-800 mb-1">实验性项目声明</h4>
+          <p class="text-sm text-amber-700 leading-relaxed">
+            本项目仅供技术学习和研究使用，旨在探索 AI 自动化的工作边界。
+            程序通过 Chrome DevTools Protocol 调用<strong>用户本地浏览器</strong>模拟操作，
+            <strong>不使用任何微博官方 API</strong>，不收集任何用户数据。
+            请勿用于批量操作或长期挂机，以免违反微博使用条款。使用本工具产生的一切后果由用户自行承担。
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="text-center mb-10">
       <h2 class="text-3xl font-bold text-gray-900 mb-3">微博自动化 Skill 生成器</h2>
@@ -71,9 +89,14 @@
         </h3>
         <div class="grid md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium mb-2 text-gray-700">微博昵称或 UID</label>
-            <input type="text" id="weiboUser" placeholder="用于学习你的发帖风格"
+            <label class="block text-sm font-medium mb-2 text-gray-700">
+              微博昵称或 UID <span class="text-gray-400 font-normal">(必填)</span>
+            </label>
+            <input type="text" id="weiboUser" placeholder="如: 微博昵称 或 1234567890"
                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg input-focus focus:border-primary outline-none text-gray-800">
+            <p class="mt-1 text-xs text-gray-500">
+              输入你的微博昵称或 UID，脚本运行时会自动识别并获取正确的用户主页
+            </p>
           </div>
           <div>
             <label class="block text-sm font-medium mb-2 text-gray-700">兴趣话题 <span class="text-gray-400 font-normal">(逗号分隔)</span></label>
@@ -131,10 +154,26 @@
         </div>
       </div>
 
-      <!-- Section 4: Content Source & Settings -->
+      <!-- Section 4: Custom Prompt -->
       <div class="mb-8">
         <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
           <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">4</span>
+          自定义提示词 <span class="text-gray-400 font-normal text-sm">(可选)</span>
+        </h3>
+        <div>
+          <label class="block text-sm font-medium mb-2 text-gray-700">转发/评论时的额外要求</label>
+          <textarea id="customPrompt" rows="3" placeholder="例如：&#10;- 评论时保持友好和专业的语气&#10;- 转发时添加个人见解，不要只是简单转发&#10;- 避免使用网络流行语"
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg input-focus focus:border-primary outline-none text-gray-800 resize-none"></textarea>
+          <p class="mt-1 text-xs text-gray-500">
+            描述你希望 AI 在生成转发语和评论时遵循的风格、语气或具体要求
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 5: Content Source & Settings -->
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">5</span>
           内容来源与设置
         </h3>
         <div class="grid md:grid-cols-2 gap-6">

@@ -11,7 +11,90 @@ import {
   type WeiboBrowser,
 } from './weibo-cdp.ts';
 
-const USER_PROFILE_URL = 'https://weibo.com/u/1043848755';
+interface UserConfig {
+  weiboUid?: string;
+  weiboUser?: string;
+  customPrompt?: string;
+  [key: string]: unknown;
+}
+
+// 判断是否为纯数字 UID
+function isNumericUid(value: string): boolean {
+  return /^\d+$/.test(value);
+}
+
+// 通过微博搜索解析昵称获取 UID
+async function resolveNicknameToUid(browser: WeiboBrowser, nickname: string): Promise<string> {
+  console.log(`[learn] Resolving nickname "${nickname}" to UID via search...`);
+
+  // 导航到用户搜索页
+  await navigateTo(browser, `https://s.weibo.com/user?q=${encodeURIComponent(nickname)}`);
+  await sleep(3000);
+
+  // 等待搜索结果加载
+  try {
+    await waitForElement(browser, '.card-wrap, .m-error', 15000);
+  } catch {
+    throw new Error(`搜索超时，请检查网络连接`);
+  }
+
+  // 从搜索结果中提取第一个用户的 UID
+  const result = await evaluateScript<{ uid: string | null; foundName: string | null }>(browser, `
+    (function() {
+      // 查找用户卡片中的链接
+      const userCard = document.querySelector('.card-wrap .card-user-b, .card-wrap .card');
+      if (!userCard) return { uid: null, foundName: null };
+
+      // 获取用户名用于确认
+      const nameEl = userCard.querySelector('.name, .title a');
+      const foundName = nameEl?.textContent?.trim() || null;
+
+      // 获取用户主页链接
+      const link = userCard.querySelector('a[href*="/u/"]');
+      if (!link) return { uid: null, foundName };
+
+      const href = link.getAttribute('href') || '';
+      const match = href.match(/\\/u\\/(\\d+)/);
+      return { uid: match ? match[1] : null, foundName };
+    })()
+  `);
+
+  if (!result.uid) {
+    throw new Error(
+      `未找到昵称为 "${nickname}" 的用户。\n` +
+      '请确认昵称是否正确，或直接使用 UID。'
+    );
+  }
+
+  console.log(`[learn] Found user: ${result.foundName || nickname}, UID: ${result.uid}`);
+  return result.uid;
+}
+
+// 获取用户配置
+async function getUserConfig(): Promise<{ weiboUser: string; isUid: boolean }> {
+  const config = await loadJsonFile<UserConfig>('user-config.json', {});
+
+  // 优先使用 weiboUid（纯数字）
+  if (config.weiboUid) {
+    return { weiboUser: config.weiboUid, isUid: true };
+  }
+
+  // 其次使用 weiboUser（可能是昵称或 UID）
+  if (config.weiboUser) {
+    return {
+      weiboUser: config.weiboUser,
+      isUid: isNumericUid(config.weiboUser),
+    };
+  }
+
+  // 如果都没有配置，抛出错误提示用户
+  throw new Error(
+    '请先在 data/user-config.json 中配置你的微博昵称或 UID (weiboUser 字段)。\n' +
+    '昵称: 你的微博名字\n' +
+    'UID: 纯数字，可从微博主页 URL (weibo.com/u/xxx) 获取'
+  );
+}
+
 const COMMENT_OUTBOX_URL = 'https://weibo.com/comment/outbox';
 
 interface UserProfile {
@@ -276,13 +359,18 @@ async function learnPreferences(forceRefresh: boolean = false): Promise<void> {
 
   console.log('[learn] Starting preference learning...');
 
+  // 获取用户配置
+  const { weiboUser, isUid } = await getUserConfig();
+  console.log(`[learn] User input: ${weiboUser} (${isUid ? 'UID' : 'nickname'})`);
+
   let browser: Awaited<ReturnType<typeof launchWeiboBrowser>> | null = null;
 
   try {
-    browser = await launchWeiboBrowser(USER_PROFILE_URL);
+    // 先打开微博首页以便登录
+    browser = await launchWeiboBrowser('https://weibo.com');
 
     // Wait for page to load
-    console.log('[learn] Waiting for user profile to load...');
+    console.log('[learn] Waiting for Weibo to load...');
     await sleep(5000);
 
     // Check if logged in
@@ -294,6 +382,20 @@ async function learnPreferences(forceRefresh: boolean = false): Promise<void> {
       console.log('[learn] Please log in to Weibo in the browser window...');
       await waitForElement(browser, '[class*="Feed"], [class*="card"]', 120_000);
     }
+
+    // 确定用户主页 URL
+    let userProfileUrl: string;
+    if (isUid) {
+      userProfileUrl = `https://weibo.com/u/${weiboUser}`;
+    } else {
+      // 通过搜索解析昵称获取 UID
+      const uid = await resolveNicknameToUid(browser, weiboUser);
+      userProfileUrl = `https://weibo.com/u/${uid}`;
+    }
+
+    console.log(`[learn] Navigating to user profile: ${userProfileUrl}`);
+    await navigateTo(browser, userProfileUrl);
+    await sleep(3000);
 
     // Extract posts from profile
     const posts = await extractPostsFromProfile(browser);
@@ -361,8 +463,14 @@ Options:
   --help, -h      Show this help
 
 Data Sources:
-  - User profile: ${USER_PROFILE_URL}
+  - User profile: 从 data/user-config.json 中的 weiboUser 读取
   - Comment outbox: ${COMMENT_OUTBOX_URL}
+
+Note:
+  请确保在 data/user-config.json 中配置了你的微博昵称或 UID (weiboUser 字段)。
+  支持两种格式：
+  - 昵称: 你的微博名字
+  - UID: 纯数字，可从微博主页 URL (weibo.com/u/xxx) 获取
 `);
     process.exit(0);
   }
