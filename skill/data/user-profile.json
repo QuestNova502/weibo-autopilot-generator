@@ -1,0 +1,18 @@
+{
+  "lastUpdated": null,
+  "interests": [],
+  "topics": [],
+  "postingStyle": {
+    "averageLength": 100,
+    "usesEmoji": false,
+    "tone": "neutral",
+    "commonPhrases": []
+  },
+  "commentStyle": {
+    "averageLength": 30,
+    "tone": "friendly",
+    "commonPhrases": []
+  },
+  "recentPosts": [],
+  "recentComments": []
+}

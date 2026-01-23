@@ -37,21 +37,18 @@
 4. 解压并移动到 `~/.agents/skills/` 目录
 5. 按照下方说明运行
 
-### 方式二：使用通用模板
+### 方式二：直接下载通用版
 
 ```bash
-# 下载通用模板
+# 克隆仓库
 git clone https://github.com/QuestNova502/weibo-autopilot-generator.git
 cd weibo-autopilot-generator
 
-# 复制模板到 skills 目录
-cp -r templates/weibo-autopilot ~/.agents/skills/my-weibo-autopilot
+# 复制通用版 skill 到 skills 目录
+cp -r skill ~/.agents/skills/weibo-autopilot
 
 # 进入 skill 目录
-cd ~/.agents/skills/my-weibo-autopilot/scripts
-
-# 安装依赖（如果需要）
-# bun 会自动处理 TypeScript
+cd ~/.agents/skills/weibo-autopilot/scripts
 
 # 首次运行：学习用户偏好
 bun learn-preferences.ts
