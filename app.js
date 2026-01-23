@@ -164,7 +164,7 @@ ${config.skillName}/
 ├── data/
 │   ├── user-config.json  # 用户配置
 │   └── user-profile.json # 学习到的用户画像
-├── skill.md
+├── SKILL.md
 └── README.md
 \`\`\`
 
@@ -186,7 +186,7 @@ async function generateAndDownload() {
 
   folder.folder('data').file('user-config.json', JSON.stringify(files.userConfig, null, 2));
   folder.folder('data').file('user-profile.json', JSON.stringify(files.userProfile, null, 2));
-  folder.file('skill.md', files.skillMd);
+  folder.file('SKILL.md', files.skillMd);
   folder.file('README.md', files.readmeMd);
 
   const scripts = folder.folder('scripts');
@@ -243,7 +243,7 @@ async function downloadDefault() {
   folder.folder('data').file('user-config.json', JSON.stringify(defaultConfig, null, 2));
   folder.folder('data').file('user-profile.json', JSON.stringify(defaultProfile, null, 2));
 
-  folder.file('skill.md', `---
+  folder.file('SKILL.md', `---
 name: weibo-autopilot
 description: Weibo autopilot skill for automatic reposting
 version: 1.0.0
